@@ -3,7 +3,7 @@ from dash import Dash, html, dash_table, dcc
 import dash_bootstrap_components as dbc
 import pandas as pd
 import plotly.express as px
-from db_helper import MySQLHelper
+
 
 # Incorporate data
 df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/gapminder2007.csv')
@@ -14,22 +14,6 @@ server=app.server
 
 df1 = px.data.gapminder()
 
-with MySQLHelper() as db:
-    query = "SELECT period_year,division_name, SUM(`bcg`) AS bcg, SUM(`penta_1`) AS penta_1 FROM `epi_performance` WHERE division_id!=0 GROUP BY period_year,division_name"
-    # Execute query and get results as DataFrame
-    df2 = db.execute_query(query)
-
-
-# App layout
-# app.layout = [
-#     html.H1(children='Title of Dash App', style={'textAlign': 'center'}),
-#     html.Div(children='My First App with Data'),
-#     dash_table.DataTable(data=df.to_dict('records'), page_size=10),
-#     dcc.Graph(figure=px.histogram(df, x='continent', y='lifeExp', histfunc='avg')),
-#     dcc.Graph(figure=px.scatter(df1, x='gdpPercap', y='lifeExp', size="pop", color="continent")),
-#     dcc.Graph(figure=px.pie(df2, names='division_name',values='penta_1',title='Sales Distribution by Product Category'))
-#
-# ]
 
 main_body = dbc.Container([
 
